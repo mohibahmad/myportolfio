@@ -383,6 +383,35 @@
             font-weight: 600;
         }
 
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .case-card {
+            padding: 22px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: var(--surface);
+        }
+
+        .case-card h3 {
+            margin-bottom: 9px;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .case-card p {
+            font-size: 13.5px;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        @media(max-width:760px) {
+            .case-grid { grid-template-columns: 1fr; }
+        }
+
         /* FEATURES LIST */
         .features-grid {
             display: grid;
@@ -772,7 +801,7 @@
         const projects = {
             travelnest: {
                 title: "TravelNest",
-                subtitle: "Modern travel booking experience built with Flutter.",
+                subtitle: "An in-development booking case study built with Flutter.",
                 kicker: "Travel Booking Platform",
                 year: "2026",
                 status: "In Development",
@@ -787,7 +816,21 @@
                     "Timeline": "4 Weeks",
                     "Status": "In Development"
                 },
-                description: `TravelNest is a <strong>full-featured travel booking platform</strong> built with Flutter, designed to provide a seamless experience for discovering destinations, exploring hotels, and managing trips. The app integrates <strong>Google Maps</strong> for location services and <strong>Stripe</strong> for secure payment processing.`,
+                description: `TravelNest is an <strong>in-development Flutter case study</strong> exploring the end-to-end travel booking journey: discovery, hotel selection, trip details, maps, and payment handoff. The goal is to keep a multi-step flow understandable and recoverable while separating product UI, domain rules, and external services. It is not presented as a shipped product; the repository reflects the current implementation stage.`,
+                caseStudy: [
+                    {
+                        title: "Product challenge",
+                        text: "A booking journey crosses search, dates, guests, room selection, maps, and payment. Each step must preserve valid state without tightly coupling the interface to network responses."
+                    },
+                    {
+                        title: "Engineering decision",
+                        text: "Riverpod manages booking state and GoRouter keeps navigation explicit across the multi-step journey. The architecture is organized to keep interface work separate from booking rules and service integrations."
+                    },
+                    {
+                        title: "Validation plan",
+                        text: "The testing scope prioritizes booking rules and critical widgets. Before release, the project still needs documented checks for responsive layouts, interrupted steps, and loading, empty, and error states."
+                    }
+                ],
                 features: [
                     {
                         title: "Search & Discovery",
@@ -806,7 +849,7 @@
                             "Multi-step booking flow with validation",
                             "Date picker with availability check",
                             "Room selection and guest management",
-                            "Secure Stripe payment integration"
+                            "Stripe payment integration flow"
                         ]
                     },
                     {
@@ -1330,9 +1373,20 @@
                         <p class="proj-desc">${p.description}</p>
                     </div>
                     <div class="proj-section">
-                        <h2 class="proj-section-title">Key Features</h2>
+                        <h2 class="proj-section-title">Implemented Scope</h2>
                         <div class="features-grid">${createFeaturesHTML(p)}</div>
                     </div>
+                    ${p.caseStudy ? `
+                    <div class="proj-section">
+                        <h2 class="proj-section-title">Engineering Case Study</h2>
+                        <div class="case-grid">
+                            ${p.caseStudy.map(item => `
+                                <article class="case-card">
+                                    <h3>${item.title}</h3>
+                                    <p>${item.text}</p>
+                                </article>`).join('')}
+                        </div>
+                    </div>` : ''}
                     <div class="stack-section">${createStackHTML(p)}</div>
                     ${createGithubButtonHTML(p)}
                 `;

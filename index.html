@@ -119,6 +119,8 @@
       scrollbar-color: #313744 transparent;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      max-width: 100%;
+      overflow-x: clip;
     }
 
     body {
@@ -128,7 +130,8 @@
       -webkit-font-smoothing: antialiased;
       line-height: 1.55;
       text-rendering: optimizeLegibility;
-      overflow-x: hidden;
+      overflow-x: clip;
+      max-width: 100%;
     }
 
     a {
@@ -1640,13 +1643,14 @@
 
     .pro.in {
       opacity: 1;
-      transform: translateY(0) scale(1) translateZ(0);
+      /* A persistent transform can disable or distort position: sticky. */
+      transform: none;
     }
 
     @media(prefers-reduced-motion: reduce) {
       .pro {
         opacity: 1 !important;
-        transform: translateY(0) scale(1) translateZ(0) !important;
+        transform: none !important;
       }
     }
 
@@ -4154,10 +4158,10 @@
             <div class="fade-up">
               <div class="kicker">Remote · Worldwide</div>
               <h1>Mohib Ahmad<br><em>Flutter Developer</em></h1>
-              <div class="role" style="margin-top: 8px;">Cross-Platform Apps — Built for Production</div>
-              <p class="value">I build fast, scalable, and production-ready applications for iOS, Android, and macOS
-                with Flutter. Every product is crafted with clean architecture, modern engineering practices, and an
-                obsessive focus on performance and user experience.</p>
+              <div class="role" style="margin-top: 8px;">Cross-Platform Apps — Engineered for Real-World Use</div>
+              <p class="value">I build and iterate on cross-platform applications for iOS, Android, and macOS with
+                Flutter. My work focuses on maintainable architecture, responsive interfaces, reliable integrations,
+                and the engineering discipline needed to move a product toward release.</p>
 
               <div class="hero-meta">
                 <div><strong>Flutter</strong>Cross-platform</div>
@@ -4268,9 +4272,9 @@
               </div>
               <div class="pc-body">
                 <div class="pc-eyebrow">TravelNest — Travel Booking Platform</div>
-                <h3>Modern travel booking experience built with Flutter.</h3>
-                <p>Search destinations, explore hotels, book stays, manage trips, and enjoy a seamless cross-platform
-                  experience.</p>
+                <h3>A booking flow designed around clear state and recoverable steps.</h3>
+                <p>An in-development Flutter case study covering destination discovery, maps, booking state, and
+                  payment integration. The project page explains the architecture and current validation scope.</p>
                 <div class="pc-meta">
                   <div><span>Stack</span><b>Flutter · Firebase · Google Maps · Stripe</b></div>
                   <div><span>Highlights</span><b>Auth · Search · Booking · Maps · Clean Arch</b></div>
