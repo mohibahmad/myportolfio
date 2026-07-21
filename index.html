@@ -2416,120 +2416,57 @@
       color: var(--accent);
     }
 
-    .career-scroll {
-      height: 150vh;
-      min-height: 980px;
-      position: relative;
-    }
-
-    .career-sticky {
-      position: sticky;
-      top: 96px;
-      min-height: 500px;
-      display: grid;
-      grid-template-columns: 155px minmax(0, 1fr);
-      gap: 34px;
-      align-items: center;
-      padding: 30px 0;
-    }
-
-    .career-rail {
-      align-self: stretch;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 18px;
-    }
-
-    .career-rail-label {
-      color: var(--muted2);
-      font-size: 10px;
-      font-weight: 750;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    .career-progress {
-      position: relative;
-      width: 2px;
-      height: 230px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .075);
-    }
-
-    .career-progress span {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, var(--accent), #00d8ff, var(--green));
-      box-shadow: 0 0 18px rgba(58, 134, 255, .6);
-      transform: scaleY(0);
-      transform-origin: top;
-      will-change: transform;
-    }
-
-    .career-count {
-      display: flex;
-      align-items: baseline;
-      gap: 5px;
-      color: var(--muted2);
-      font-size: 12px;
-    }
-
-    .career-count strong {
-      color: #fff;
-      font-size: 30px;
-      font-weight: 780;
-      letter-spacing: -.04em;
-    }
+    .career-scroll { margin-top: 54px; }
 
     .career-stage {
       position: relative;
-      min-height: 410px;
-      overflow: hidden;
-      border-radius: 24px;
-      isolation: isolate;
+      display: grid;
+      gap: 18px;
+      padding-left: 52px;
     }
 
     .career-stage::before {
       content: '';
       position: absolute;
-      inset: 8% 5%;
-      z-index: -1;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(58, 134, 255, .14), transparent 68%);
-      filter: blur(30px);
-      transform: translateY(var(--career-glow-y, 30px));
+      top: 30px;
+      bottom: 30px;
+      left: 15px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), rgba(0, 216, 255, .45), var(--green));
+      box-shadow: 0 0 18px rgba(58, 134, 255, .24);
     }
 
     .career-card {
-      position: absolute;
-      inset: 18px 0;
-      padding: 34px 38px;
-      overflow: hidden;
+      position: relative;
+      padding: 32px 36px;
+      overflow: visible;
       border: 1px solid rgba(255, 255, 255, .085);
       border-radius: 24px;
       background: linear-gradient(145deg, rgba(27, 33, 46, .96), rgba(13, 16, 23, .94));
       box-shadow: 0 30px 85px rgba(0, 0, 0, .46), inset 0 1px 0 rgba(255, 255, 255, .045);
-      transform-origin: center;
-      will-change: opacity, transform, filter;
+      transition: transform .28s ease, border-color .28s ease, background .28s ease;
     }
 
-    .career-card[data-step="01"] { z-index: 2; }
-
-    .career-card[data-step="02"] {
-      z-index: 1;
-      opacity: .06;
-      filter: blur(8px);
-      pointer-events: none;
-      transform: translate3d(0, 96px, 0) scale(.94);
+    .career-card::before {
+      content: '';
+      position: absolute;
+      top: 37px;
+      left: -43px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #0b0d13;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 7px #0b0d13, 0 0 18px rgba(58, 134, 255, .6);
     }
+
+    .career-card[data-step="02"]::before { border-color: var(--green); box-shadow: 0 0 0 7px #0b0d13, 0 0 18px rgba(34, 211, 154, .55); }
 
     .career-card::after {
       content: attr(data-step);
       position: absolute;
       right: 22px;
-      bottom: -40px;
+      bottom: 4px;
       color: rgba(255, 255, 255, .025);
       font-size: 170px;
       font-weight: 850;
@@ -2538,7 +2475,8 @@
       pointer-events: none;
     }
 
-    .career-card.is-current {
+    .career-card:hover {
+      transform: translateY(-4px);
       border-color: rgba(58, 134, 255, .34);
       box-shadow: 0 34px 95px rgba(0, 0, 0, .52), 0 0 55px rgba(58, 134, 255, .09), inset 0 1px 0 rgba(255, 255, 255, .07);
     }
@@ -2580,27 +2518,12 @@
     .career-card .exp-desc { margin-top: 18px; max-width: 720px; }
 
     @media(max-width:720px) {
-      .career-scroll { height: 138vh; min-height: 880px; }
-      .career-sticky {
-        top: 72px;
-        min-height: 570px;
-        grid-template-columns: 1fr;
-        gap: 14px;
-        align-content: center;
-      }
-      .career-rail {
-        align-self: auto;
-        display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        gap: 10px 14px;
-      }
-      .career-rail-label { grid-column: 1; }
-      .career-count { grid-column: 2; grid-row: 1; }
-      .career-progress { grid-column: 1 / -1; width: 100%; height: 2px; }
-      .career-progress span { transform-origin: left; }
-      .career-stage { min-height: 455px; }
-      .career-card { inset: 8px 0; padding: 26px 22px; }
+      .career-scroll { margin-top: 34px; }
+      .career-stage { padding-left: 28px; gap: 14px; }
+      .career-stage::before { left: 5px; }
+      .career-card { padding: 26px 22px; }
+      .career-card::before { left: -31px; top: 32px; width: 11px; height: 11px; box-shadow: 0 0 0 5px #0b0d13, 0 0 15px rgba(58, 134, 255, .55); }
+      .career-card[data-step="02"]::before { box-shadow: 0 0 0 5px #0b0d13, 0 0 15px rgba(34, 211, 154, .5); }
       .career-card .exp-title-row { align-items: flex-start; }
       .career-card .exp-title-row h3 { font-size: 27px; }
       .career-card::after { font-size: 120px; }
@@ -4643,15 +4566,8 @@
             <div class="sec-note">TS Technology · On-site</div>
           </div>
 
-          <div class="career-scroll" id="careerScroll">
-            <div class="career-sticky">
-              <aside class="career-rail" aria-label="Career progression">
-                <span class="career-rail-label">Career progression</span>
-                <div class="career-progress" aria-hidden="true"><span id="careerProgressFill"></span></div>
-                <div class="career-count" aria-live="polite"><strong id="careerCount">01</strong><span>/ 02</span></div>
-              </aside>
-
-              <div class="career-stage" id="careerStage">
+          <div class="career-scroll">
+            <div class="career-stage" aria-label="Career progression">
                 <article class="career-card is-current view-target" data-step="01">
                   <div class="career-card-top">
                     <span class="career-phase">Foundation</span>
@@ -4689,7 +4605,6 @@
                     </ul>
                   </div>
                 </article>
-              </div>
             </div>
           </div>
         </div>
@@ -5326,85 +5241,6 @@
           aboutObserver.disconnect();
         }, { threshold: 0.01, rootMargin: '0px 0px 18% 0px' });
         aboutObserver.observe(about);
-      })();
-      /* Sticky career stage: scrub from internship to current developer role. */
-      (function () {
-        var scrollZone = document.getElementById('careerScroll');
-        var stage = document.getElementById('careerStage');
-        var cards = document.querySelectorAll('.career-card');
-        var fill = document.getElementById('careerProgressFill');
-        var count = document.getElementById('careerCount');
-        if (!scrollZone || !stage || cards.length !== 2 || !fill || !count) return;
-
-        function clampCareer(value) { return Math.max(0, Math.min(1, value)); }
-        function smoothCareer(start, end, value) {
-          var x = clampCareer((value - start) / (end - start));
-          return x * x * (3 - 2 * x);
-        }
-
-        if (reduce) {
-          cards[0].style.display = 'none';
-          cards[1].style.opacity = '1';
-          cards[1].style.transform = 'none';
-          cards[1].style.filter = 'none';
-          cards[1].classList.add('is-current');
-          fill.style.transform = window.innerWidth <= 720 ? 'scaleX(1)' : 'scaleY(1)';
-          count.textContent = '02';
-          return;
-        }
-
-        function updateCareerStage() {
-          var rect = scrollZone.getBoundingClientRect();
-          var travel = Math.max(scrollZone.offsetHeight - window.innerHeight, 1);
-          var progress = clampCareer(-rect.top / travel);
-          var handoff = smoothCareer(.2, .72, progress);
-
-          cards[0].style.opacity = (1 - handoff * .9).toFixed(3);
-          cards[0].style.transform = 'translate3d(0,' + (-74 * handoff).toFixed(2) + 'px,0) scale(' + (1 - handoff * .055).toFixed(4) + ')';
-          cards[0].style.filter = 'blur(' + (7 * handoff).toFixed(2) + 'px)';
-          cards[0].style.pointerEvents = handoff < .5 ? 'auto' : 'none';
-
-          cards[1].style.opacity = (.06 + handoff * .94).toFixed(3);
-          cards[1].style.transform = 'translate3d(0,' + (96 * (1 - handoff)).toFixed(2) + 'px,0) scale(' + (.94 + handoff * .06).toFixed(4) + ')';
-          cards[1].style.filter = 'blur(' + (8 * (1 - handoff)).toFixed(2) + 'px)';
-          cards[1].style.pointerEvents = handoff >= .5 ? 'auto' : 'none';
-
-          var secondIsActive = handoff >= .5;
-          cards[0].style.zIndex = secondIsActive ? '1' : '2';
-          cards[1].style.zIndex = secondIsActive ? '2' : '1';
-          cards[0].classList.toggle('is-current', !secondIsActive);
-          cards[1].classList.toggle('is-current', secondIsActive);
-          count.textContent = secondIsActive ? '02' : '01';
-          fill.style.transform = window.innerWidth <= 720
-            ? 'scaleX(' + progress.toFixed(4) + ')'
-            : 'scaleY(' + progress.toFixed(4) + ')';
-          stage.style.setProperty('--career-glow-y', ((handoff - .5) * 90).toFixed(2) + 'px');
-        }
-
-        var careerTicking = false;
-        function requestCareerUpdate() {
-          if (careerTicking) return;
-          careerTicking = true;
-          requestAnimationFrame(function () {
-            updateCareerStage();
-            careerTicking = false;
-          });
-        }
-
-        window.addEventListener('scroll', requestCareerUpdate, { passive: true });
-        window.addEventListener('resize', requestCareerUpdate, { passive: true });
-        var careerLenis = null;
-        function bindCareerLenis() {
-          if (!window.__lenis || careerLenis === window.__lenis) return;
-          careerLenis = window.__lenis;
-          careerLenis.on('scroll', requestCareerUpdate);
-        }
-        bindCareerLenis();
-        setTimeout(function () { bindCareerLenis(); requestCareerUpdate(); }, 500);
-        window.addEventListener('beforeunload', function () {
-          if (careerLenis && careerLenis.off) careerLenis.off('scroll', requestCareerUpdate);
-        });
-        updateCareerStage();
       })();
       /* Process steps and connecting line follow the visitor's scroll position. */
       (function () {
