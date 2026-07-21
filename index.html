@@ -3262,6 +3262,9 @@
       }
     } catch (e) { }
     if (window.location.search.includes('from=project') || window.location.search.includes('from=resume') || window.__resumeHistoryReturn) {
+      if (window.location.search.includes('from=resume') || window.__resumeHistoryReturn) {
+        document.documentElement.classList.add('resume-return-pending');
+      }
       document.documentElement.style.overflow = 'hidden';
       document.documentElement.style.height = '100%';
       if (window.location.hash) {
@@ -3277,6 +3280,11 @@
 
     .preload-skip body {
       overflow: auto !important;
+    }
+
+    /* Prevent the navbar/page from flashing before the resume return scene is ready. */
+    html.resume-return-pending .page {
+      visibility: hidden !important;
     }
   </style>
   <style>
@@ -6037,6 +6045,7 @@
           motionTimeline = null;
         }
         restorePortfolio();
+        document.documentElement.classList.remove('resume-return-pending');
         finishClose();
       }
 
@@ -6065,6 +6074,7 @@
       function playReturnTransition() {
         if (prefersReducedMotion() || !window.gsap) {
           if (!experience.hidden) restorePortfolio();
+          document.documentElement.classList.remove('resume-return-pending');
           isAnimating = false;
           return;
         }
@@ -6085,8 +6095,11 @@
         motionTimeline = buildMotionTimeline(false);
         motionTimeline.eventCallback('onComplete', null);
         motionTimeline.progress(1, true);
-
         motionTimeline.eventCallback('onReverseComplete', completeReturnTransition);
+
+        // The full-screen return scene is now painted; the portfolio remains
+        // hidden by the timeline until the reverse animation reveals it.
+        document.documentElement.classList.remove('resume-return-pending');
 
         requestAnimationFrame(function () {
           motionTimeline.timeScale(1).reverse();
