@@ -5111,7 +5111,7 @@
       setTimeout(finish, 2500);
 
       // Animate progress
-      var totalDuration = 1000;
+      var totalDuration = 1450;
       var startTime = window.__loaderStartTime || performance.now();
       var ariaProgress = document.getElementById('plAria');
       function tick(now) {
@@ -5126,7 +5126,7 @@
         if (ariaProgress) ariaProgress.setAttribute('aria-valuenow', ip);
         if (msg) msg.textContent = msgs[Math.min(Math.floor(p / 18), msgs.length - 1)];
         if (t >= 1) {
-          setTimeout(finish, 300);
+          setTimeout(finish, 350);
           return;
         }
         requestAnimationFrame(tick);
