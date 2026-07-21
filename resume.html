@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, follow">
+  <title>Resume — Mohib Ahmad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="images/portfolio-optimized.jpg">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" onload="document.documentElement.classList.add('gsap-enabled')"></script>
+  <style>
+    :root {
+      --bg: #080b11;
+      --surface: #111620;
+      --line: rgba(255, 255, 255, .09);
+      --text: #eef1f7;
+      --muted: #9099a8;
+      --accent: #3a86ff;
+      --cyan: #00f2fe;
+      --green: #22d39a;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; min-height: 100%; }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 50% -15%, rgba(58, 134, 255, .16), transparent 42%),
+        var(--bg);
+      overflow: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    :focus-visible {
+      outline: 3px solid #7fdfff;
+      outline-offset: 4px;
+      border-radius: 8px;
+    }
+
+    .resume-page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      opacity: 0;
+      transform: translateY(6px);
+      animation: pageEnter .24s var(--ease) forwards;
+    }
+
+    .resume-page.leaving {
+      animation: pageLeave .16s ease-in forwards;
+    }
+
+    .gsap-enabled .resume-page:not(.leaving) {
+      animation: none;
+    }
+
+    @keyframes pageEnter {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pageLeave {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(4px); }
+    }
+
+    .topbar {
+      min-height: 76px;
+      padding: 14px clamp(18px, 4vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(8, 11, 17, .78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      position: relative;
+      z-index: 20;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(58, 134, 255, .28);
+      border-radius: 10px;
+      color: var(--accent);
+      background: rgba(58, 134, 255, .08);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .brand-copy b { display: block; font-size: 13px; }
+    .brand-copy span { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; }
+
+    .actions { display: flex; align-items: center; gap: 10px; }
+
+    .button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 0 17px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: #cbd2de;
+      background: rgba(255, 255, 255, .025);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .25s var(--ease), border-color .25s, background .25s;
+    }
+
+    .button:hover { transform: translateY(-2px); border-color: rgba(255, 255, 255, .18); }
+
+    .button.primary {
+      color: white;
+      border-color: var(--accent);
+      background: var(--accent);
+      box-shadow: 0 12px 32px rgba(58, 134, 255, .2);
+    }
+
+    .button.download-button,
+    .button.download-button:hover,
+    .button.download-button:active {
+      transform: none;
+    }
+
+    .button.download-button[disabled] {
+      cursor: wait;
+      opacity: .72;
+    }
+
+    .viewer-shell {
+      min-height: 0;
+      padding: clamp(12px, 2vw, 22px);
+      display: grid;
+    }
+
+    .viewer {
+      width: min(100%, 1080px);
+      height: 100%;
+      min-height: 0;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 28px 90px rgba(0, 0, 0, .5);
+    }
+
+    .viewer object { width: 100%; height: 100%; display: block; border: 0; }
+
+    .pdf-fallback {
+      min-height: 70vh;
+      display: grid;
+      place-items: center;
+      color: #344054;
+      text-align: center;
+      padding: 32px;
+    }
+
+    #pageTransition {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 42%, rgba(58, 134, 255, 0), rgba(6, 8, 12, 0));
+      backdrop-filter: blur(0);
+      -webkit-backdrop-filter: blur(0);
+      transition: opacity .5s var(--ease), background .65s var(--ease), backdrop-filter .65s ease;
+    }
+
+    #pageTransition.active {
+      opacity: 1;
+      pointer-events: auto;
+      background: radial-gradient(circle at 50% 42%, rgba(28, 70, 138, .28), rgba(6, 8, 12, .97) 58%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    #pageTransition > :not(.tr-wipes) { position: relative; z-index: 2; }
+
+    .tr-wipes {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: repeat(4, 1fr);
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .tr-wipes span {
+      background: linear-gradient(90deg, transparent, rgba(34, 211, 154, .08), rgba(58, 134, 255, .16), transparent);
+      border-block: 1px solid rgba(127, 223, 255, .04);
+      transform: translateX(110%);
+      transition: transform .65s var(--ease);
+    }
+
+    .tr-wipes span:nth-child(even) { transform: translateX(-110%); transition-delay: .08s; }
+    .tr-wipes span:nth-child(3) { transition-delay: .16s; }
+    .tr-wipes span:nth-child(4) { transition-delay: .24s; }
+    #pageTransition.active .tr-wipes span { transform: translateX(0); }
+    #pageTransition.complete .tr-wipes { opacity: .25; transition: opacity .45s; }
+
+    .tr-kicker {
+      margin-bottom: 24px;
+      color: #5f8fde;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .35s .1s, transform .35s .1s var(--ease);
+    }
+
+    #pageTransition.active .tr-kicker { opacity: 1; transform: translateY(0); }
+
+    .tr-loader { position: relative; width: 80px; height: 80px; margin-bottom: 28px; }
+
+    .tr-ring {
+      position: absolute;
+      inset: 0;
+      border: 2px solid rgba(58, 134, 255, .08);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(.4);
+      transition: opacity .3s .1s, transform .4s .1s var(--ease);
+    }
+
+    .tr-ring:nth-child(2) { inset: 8px; border-top-color: var(--cyan); transition-delay: .18s; }
+    .tr-ring:nth-child(3) { inset: 16px; border-top-color: var(--green); transition-delay: .25s; }
+
+    .tr-core {
+      position: absolute;
+      inset: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      padding: 0 9px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 8px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .025));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 10px 30px rgba(0, 0, 0, .35);
+      opacity: 0;
+      transform: scale(.7);
+      transition: opacity .3s .25s, transform .4s .25s var(--ease);
+    }
+
+    .tr-core span { height: 2px; border-radius: 2px; background: rgba(180, 211, 255, .7); }
+    .tr-core span:nth-child(2) { width: 72%; }
+    .tr-core span:nth-child(3) { width: 48%; }
+    #pageTransition.active .tr-core { opacity: 1; transform: scale(1); }
+
+    #pageTransition.active .tr-ring { opacity: 1; transform: scale(1); animation: spin 1.8s linear infinite; }
+    #pageTransition.active .tr-ring:nth-child(2) { animation-direction: reverse; animation-duration: 2.4s; }
+    #pageTransition.active .tr-ring:nth-child(3) { animation-duration: 3s; }
+    #pageTransition.complete .tr-ring { border-top-color: var(--green); }
+
+    .tr-text {
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .35s .18s, transform .35s .18s var(--ease);
+    }
+
+    #pageTransition.active .tr-text { opacity: 1; transform: translateY(0); }
+
+    .tr-progress {
+      width: 180px;
+      height: 2px;
+      margin-top: 20px;
+      overflow: hidden;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, .07);
+      opacity: 0;
+      transition: opacity .25s .25s;
+    }
+
+    .tr-progress span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: linear-gradient(90deg, var(--accent), var(--cyan), var(--green));
+      box-shadow: 0 0 16px rgba(0, 242, 254, .65);
+    }
+
+    #pageTransition.active .tr-progress { opacity: 1; }
+    #pageTransition.active .tr-progress span { animation: progress .9s var(--ease) forwards; }
+
+
+    .tr-sub {
+      margin-top: 10px;
+      color: #4f6f9e;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .3s .3s, transform .3s .3s var(--ease);
+    }
+
+    #pageTransition.active .tr-sub { opacity: 1; transform: translateY(0); }
+
+    @keyframes spin { to { transform: scale(1) rotate(360deg); } }
+    @keyframes progress { to { transform: scaleX(1); } }
+
+    @media (max-width: 620px) {
+      .topbar { align-items: flex-start; padding: 12px 14px; }
+      .brand-copy span { display: none; }
+      .actions { gap: 7px; }
+      .button { min-height: 40px; padding: 0 12px; font-size: 10px; }
+      .viewer-shell { padding: 10px; }
+      .viewer { border-radius: 13px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="resume-page" id="resumePage">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">MA</div>
+        <div class="brand-copy"><b>Mohib Ahmad</b><span>Flutter Developer · Resume</span></div>
+      </div>
+      <div class="actions">
+        <a class="button" id="backToPortfolio" href="index.html?from=resume#top">← Back to Portfolio</a>
+        <button class="button primary download-button" id="downloadPdf" type="button">Download PDF ↓</button>
+      </div>
+    </header>
+
+    <section class="viewer-shell" aria-label="Mohib Ahmad resume viewer">
+      <div class="viewer">
+        <object data="Mohib-Ahmad-Resume.pdf#view=FitH" type="application/pdf" aria-label="Mohib Ahmad resume PDF">
+          <div class="pdf-fallback">
+            <p>Your browser cannot display the PDF here.<br><a href="Mohib-Ahmad-Resume.pdf" download><strong>Download the resume</strong></a></p>
+          </div>
+        </object>
+      </div>
+    </section>
+  </main>
+
+  <div id="pageTransition" role="status" aria-live="polite" aria-hidden="true">
+    <div class="tr-wipes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <div class="tr-kicker">Mohib Ahmad · Portfolio</div>
+    <div class="tr-loader" aria-hidden="true"><div class="tr-ring"></div><div class="tr-ring"></div><div class="tr-ring"></div><div class="tr-core"><span></span><span></span><span></span></div></div>
+    <div class="tr-text">Returning to portfolio</div>
+    <div class="tr-progress" aria-hidden="true"><span></span></div>
+    <div class="tr-sub">Restoring your previous view</div>
+  </div>
+
+  <script src="resume-data.js"></script>
+  <script>
+    (function () {
+      var back = document.getElementById('backToPortfolio');
+      var downloadButton = document.getElementById('downloadPdf');
+      var page = document.getElementById('resumePage');
+      var leaving = false;
+      var downloading = false;
+      var cameFromPortfolio = /(?:portfolio_preview|index)\.html(?:$|[?#])/.test(document.referrer);
+
+      function playResumeEntrance() {
+        var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var topbar = page.querySelector('.topbar');
+        var brandParts = page.querySelectorAll('.brand > *');
+        var actionButtons = page.querySelectorAll('.actions > *');
+        var viewerShell = page.querySelector('.viewer-shell');
+        var viewer = page.querySelector('.viewer');
+        var documentFrame = viewer && viewer.querySelector('object');
+
+        if (!window.gsap || reducedMotion) {
+          page.style.animation = 'none';
+          page.style.opacity = '1';
+          page.style.transform = 'none';
+          return;
+        }
+
+        var gsap = window.gsap;
+        gsap.timeline({ defaults: { overwrite: 'auto' } })
+          .set(page, { autoAlpha: 1, y: 0 })
+          .fromTo(topbar,
+            { autoAlpha: 0, y: -76 },
+            { duration: 0.82, autoAlpha: 1, y: 0, ease: 'power4.out' },
+            0
+          )
+          .fromTo(brandParts,
+            { autoAlpha: 0, x: -18 },
+            { duration: 0.58, autoAlpha: 1, x: 0, stagger: 0.08, ease: 'power3.out' },
+            0.28
+          )
+          .fromTo(actionButtons,
+            { autoAlpha: 0, x: 18 },
+            { duration: 0.58, autoAlpha: 1, x: 0, stagger: 0.09, ease: 'power3.out' },
+            0.32
+          )
+          .fromTo(viewerShell,
+            { autoAlpha: 0 },
+            { duration: 0.35, autoAlpha: 1, ease: 'none' },
+            0.18
+          )
+          .fromTo(viewer,
+            {
+              autoAlpha: 0,
+              y: 46,
+              scale: 0.955,
+              rotationX: -4,
+              transformPerspective: 1200,
+              clipPath: 'inset(48% 3% 48% 3% round 18px)'
+            },
+            {
+              duration: 1.18,
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              rotationX: 0,
+              clipPath: 'inset(0% 0% 0% 0% round 18px)',
+              ease: 'expo.out'
+            },
+            0.26
+          )
+          .fromTo(documentFrame,
+            { autoAlpha: 0, scale: 1.018 },
+            { duration: 0.78, autoAlpha: 1, scale: 1, ease: 'power2.out' },
+            0.8
+          );
+      }
+
+      playResumeEntrance();
+
+      downloadButton.addEventListener('click', function () {
+        if (downloading) return;
+        downloading = true;
+        downloadButton.disabled = true;
+        downloadButton.setAttribute('aria-busy', 'true');
+        downloadButton.textContent = 'Downloading…';
+
+        try {
+          if (!window.__resumePdfBase64) throw new Error('Resume data unavailable');
+          var binary = window.atob(window.__resumePdfBase64);
+          var bytes = new Uint8Array(binary.length);
+          for (var i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+          var blob = new Blob([bytes], { type: 'application/pdf' });
+          var objectUrl = URL.createObjectURL(blob);
+          var link = document.createElement('a');
+          link.href = objectUrl;
+          link.download = 'Mohib-Ahmad-Resume.pdf';
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(function () { URL.revokeObjectURL(objectUrl); }, 1500);
+          downloadButton.textContent = 'Downloaded ✓';
+        } catch (error) {
+          var fallbackLink = document.createElement('a');
+          fallbackLink.href = 'Mohib-Ahmad-Resume.pdf';
+          fallbackLink.download = 'Mohib-Ahmad-Resume.pdf';
+          fallbackLink.style.display = 'none';
+          document.body.appendChild(fallbackLink);
+          fallbackLink.click();
+          fallbackLink.remove();
+          downloadButton.textContent = 'Downloaded ✓';
+        }
+
+        setTimeout(function () {
+          downloadButton.disabled = false;
+          downloadButton.removeAttribute('aria-busy');
+          if (downloadButton.textContent === 'Downloaded ✓') {
+            downloadButton.textContent = 'Download PDF ↓';
+          }
+          downloading = false;
+        }, 1800);
+      });
+
+      back.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (leaving) return;
+        leaving = true;
+
+        try { sessionStorage.setItem('portfolio:resume-return', '1'); } catch (error) { }
+
+        function returnToPortfolio() {
+          if (cameFromPortfolio && window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.replace(back.href);
+          }
+        }
+
+        if (!window.gsap || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          page.classList.add('leaving');
+          setTimeout(returnToPortfolio, 160);
+          return;
+        }
+
+        var gsap = window.gsap;
+        var topbar = page.querySelector('.topbar');
+        var brandParts = page.querySelectorAll('.brand > *');
+        var actionButtons = page.querySelectorAll('.actions > *');
+        var viewerShell = page.querySelector('.viewer-shell');
+        var viewer = page.querySelector('.viewer');
+        var documentFrame = viewer && viewer.querySelector('object');
+
+        page.style.pointerEvents = 'none';
+        gsap.killTweensOf([page, topbar, viewerShell, viewer, documentFrame]);
+        gsap.killTweensOf(brandParts);
+        gsap.killTweensOf(actionButtons);
+
+        gsap.timeline({ onComplete: returnToPortfolio })
+          .to(documentFrame, {
+            duration: 0.46,
+            autoAlpha: 0,
+            scale: 1.018,
+            ease: 'power2.in'
+          }, 0)
+          .to(viewer, {
+            duration: 1.18,
+            autoAlpha: 0,
+            y: 42,
+            scale: 0.955,
+            rotationX: -4,
+            transformPerspective: 1200,
+            clipPath: 'inset(48% 3% 48% 3% round 18px)',
+            ease: 'expo.inOut'
+          }, 0.08)
+          .to(actionButtons, {
+            duration: 0.58,
+            autoAlpha: 0,
+            x: 20,
+            stagger: 0.09,
+            ease: 'power3.in'
+          }, 0.18)
+          .to(brandParts, {
+            duration: 0.58,
+            autoAlpha: 0,
+            x: -20,
+            stagger: 0.08,
+            ease: 'power3.in'
+          }, 0.22)
+          .to(topbar, {
+            duration: 0.82,
+            autoAlpha: 0,
+            y: -76,
+            ease: 'power3.inOut'
+          }, 0.5)
+          .to(viewerShell, {
+            duration: 0.35,
+            autoAlpha: 0,
+            ease: 'power2.in'
+          }, 1.18)
+          .to(page, {
+            duration: 0.18,
+            autoAlpha: 0,
+            ease: 'power2.in'
+          }, 1.32);
+      });
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project — Mohib Ahmad</title>
+    <meta name="description" id="projectDescription" content="Flutter project case study by Mohib Ahmad, covering product decisions, key features, and engineering stack.">
+    <meta name="robots" id="projectRobots" content="index, follow">
+    <meta name="theme-color" content="#0b0d13">
+    <link rel="canonical" id="projectCanonical" href="https://mohibahmad.studio/project.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Mohib Ahmad — Flutter Developer Portfolio">
+    <meta property="og:title" id="projectOgTitle" content="Flutter Project — Mohib Ahmad">
+    <meta property="og:description" id="projectOgDescription" content="Flutter project case study by Mohib Ahmad.">
+    <meta property="og:url" id="projectOgUrl" content="https://mohibahmad.studio/project.html">
+    <meta property="og:image" id="projectOgImage" content="https://mohibahmad.studio/images/og-card.jpg">
+    <meta property="og:image:alt" id="projectOgImageAlt" content="Mohib Ahmad Flutter project case study">
+    <meta property="og:image:width" content="900">
+    <meta property="og:image:height" content="900">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" id="projectTwitterTitle" content="Flutter Project — Mohib Ahmad">
+    <meta name="twitter:description" id="projectTwitterDescription" content="Flutter project case study by Mohib Ahmad.">
+    <meta name="twitter:image" id="projectTwitterImage" content="https://mohibahmad.studio/images/og-card.jpg">
+    <meta name="twitter:image:alt" content="Mohib Ahmad Flutter project case study">
+    <script type="application/ld+json" id="projectSchema">{}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="images/portfolio-optimized.jpg">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0b0d13;
+            --bg2: #10141c;
+            --surface: #161a23;
+            --surface2: #1b202b;
+            --line: #252b36;
+            --text: #e9ebf1;
+            --muted: #9aa1ae;
+            --muted2: #6f7580;
+            --accent: #3a86ff;
+            --accent2: #22d39a;
+            --max: 960px;
+            --r: 16px;
+            --ease: cubic-bezier(.22, 1, .36, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .skip-link {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 10000;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: #fff;
+            color: #07101f;
+            font-weight: 700;
+            transform: translateY(-160%);
+            transition: transform .2s ease;
+        }
+
+        .skip-link:focus { transform: translateY(0); }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 13, 19, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--line);
+            padding: 14px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topbar-brand {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.01em;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .topbar-brand:hover {
+            color: var(--accent);
+        }
+
+        .topbar-brand span {
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .topbar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 650;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.22s var(--ease);
+            text-decoration: none;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--muted);
+        }
+
+        .topbar-btn:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .topbar-btn.primary {
+            background: var(--accent);
+            border: 1px solid var(--accent);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(58, 134, 255, 0.2);
+        }
+
+        .topbar-btn.primary:hover {
+            background: #256ee0;
+            box-shadow: 0 12px 32px rgba(58, 134, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .topbar-btn svg {
+            flex-shrink: 0;
+        }
+
+        @media(max-width:768px) {
+            .topbar {
+                padding: 12px 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .topbar-actions {
+                width: 100%;
+                display: flex;
+                gap: 10px;
+            }
+
+            .topbar-btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        /* WRAP */
+        .wrap {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        @media(max-width:640px) {
+            .wrap {
+                padding: 0 20px;
+            }
+        }
+
+        /* HERO SECTION */
+        .proj-hero {
+            padding: 48px 0 0;
+        }
+
+        .proj-hero-top {
+            margin-bottom: 32px;
+        }
+
+        .proj-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11.6px;
+            font-weight: 650;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .proj-kicker::before {
+            content: '';
+            width: 28px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        .proj-title {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 12px;
+        }
+
+        .proj-subtitle {
+            font-size: 18px;
+            color: var(--muted);
+            font-weight: 500;
+            max-width: 600px;
+        }
+
+        /* SCREENSHOTS CAROUSEL */
+        .screenshots {
+            position: relative;
+            margin-bottom: 48px;
+        }
+
+        .ss-track {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 4px 0 20px;
+        }
+
+        .ss-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ss-item {
+            flex: 0 0 auto;
+            width: 70%;
+            max-width: 560px;
+            scroll-snap-align: center;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: var(--surface);
+            position: relative;
+        }
+
+        .ss-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 16/10;
+            object-fit: cover;
+        }
+
+        .ss-label {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        @media(max-width:640px) {
+            .ss-item {
+                width: 85%;
+            }
+        }
+
+        /* DOTS */
+        .ss-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .ss-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--line);
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .ss-dot.active {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        /* PROJECT META BAR */
+        .proj-meta-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            padding: 24px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 48px;
+        }
+
+        .proj-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .proj-meta-item span {
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted2);
+        }
+
+        .proj-meta-item b {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        /* CONTENT SECTIONS */
+        .proj-content {
+            padding-bottom: 80px;
+        }
+
+        .proj-section {
+            margin-bottom: 48px;
+        }
+
+        .proj-section-title {
+            font-size: 22px;
+            font-weight: 750;
+            letter-spacing: -0.01em;
+            margin-bottom: 16px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .proj-section-title::before {
+            content: '';
+            width: 4px;
+            height: 22px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .proj-desc {
+            font-size: 16px;
+            color: #bcc2cc;
+            line-height: 1.8;
+            max-width: 720px;
+        }
+
+        .proj-desc strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* FEATURES LIST */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media(max-width:700px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 100%), var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 24px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(58, 134, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .feature-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-card h4 .feat-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(58, 134, 255, 0.1);
+            border: 1px solid rgba(58, 134, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-card li {
+            font-size: 13.5px;
+            color: var(--muted);
+            line-height: 1.7;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .feature-card li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 9px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.6;
+        }
+
+        /* STACK CHIPS */
+        .stack-section {
+            padding: 32px 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .stack-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted2);
+            margin-bottom: 16px;
+        }
+
+        .stack-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stack-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text);
+            transition: border-color 0.3s, background 0.3s, transform 0.2s;
+        }
+
+        .stack-chip:hover {
+            border-color: rgba(58, 134, 255, 0.3);
+            background: rgba(58, 134, 255, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .chip-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* HIGHLIGHTS */
+        .highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .highlight-tag {
+            font-size: 12px;
+            font-weight: 650;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(34, 211, 154, 0.08);
+            border: 1px solid rgba(34, 211, 154, 0.2);
+            color: var(--accent2);
+        }
+
+        /* NEXT/PREV PROJECT */
+        .proj-nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 40px 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .proj-nav-link {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.02);
+            text-decoration: none;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .proj-nav-link:hover {
+            border-color: rgba(58, 134, 255, 0.2);
+            background: rgba(58, 134, 255, 0.04);
+        }
+
+        .proj-nav-link.next {
+            text-align: right;
+        }
+
+        .proj-nav-label {
+            font-size: 11px;
+            font-weight: 650;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted2);
+        }
+
+        .proj-nav-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        @media(max-width:600px) {
+            .proj-nav {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* GITHUB BUTTON */
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: inherit;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(135deg, #24292e 0%, #1a1d21 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.35s cubic-bezier(.22, 1, .36, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .github-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(58, 134, 255, 0.15) 0%, rgba(34, 211, 154, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.35s;
+        }
+
+        .github-btn:hover::before {
+            opacity: 1;
+        }
+
+        .github-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 30px rgba(58, 134, 255, 0.1);
+            border-color: rgba(58, 134, 255, 0.3);
+        }
+
+        .github-btn:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .github-btn svg {
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .github-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .github-row {
+            display: flex;
+            justify-content: center;
+            padding: 48px 0 40px;
+        }
+
+        /* LOADING OVERLAY */
+        #loadOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(6, 8, 12, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #loadOverlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lo-spinner {
+            width: 32px;
+            height: 32px;
+            border: 2.5px solid rgba(255, 255, 255, 0.08);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: loSpin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes loSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .lo-text {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 24px 0;
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--muted2);
+        }
+
+        footer a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text);
+        }
+    </style>
+</head>
+
+<body>
+    <a class="skip-link" href="#projectContent">Skip to project content</a>
+
+    <!-- LOADING OVERLAY -->
+    <div id="loadOverlay">
+        <div class="lo-spinner"></div>
+        <div class="lo-text">Loading Projects…</div>
+    </div>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <a href="index.html" class="topbar-brand">Mohib Ahmad <span>— Portfolio</span></a>
+        <div class="topbar-actions">
+            <a href="index.html?from=project" class="topbar-btn" id="backBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                All Projects
+            </a>
+            <a href="resume.html" class="topbar-btn primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Resume
+            </a>
+        </div>
+    </div>
+
+    <main class="wrap" id="projectContent">
+        <!-- HERO -->
+        <section class="proj-hero" id="projHero">
+            <!-- Populated by JS -->
+        </section>
+
+        <!-- SCREENSHOTS -->
+        <section class="screenshots" id="screenshots">
+            <!-- Populated by JS -->
+        </section>
+
+        <!-- META BAR -->
+        <div class="proj-meta-bar" id="projMeta">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- CONTENT -->
+        <div class="proj-content" id="projContent">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- NAV -->
+        <div class="proj-nav" id="projNav">
+            <!-- Populated by JS -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            © 2026 Mohib Ahmad · <a href="index.html">Back to Portfolio</a>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="antigravity-transition.js"></script>
+    <script>
+        // Project Data
+        const projects = {
+            travelnest: {
+                title: "TravelNest",
+                subtitle: "Modern travel booking experience built with Flutter.",
+                kicker: "Travel Booking Platform",
+                year: "2026",
+                status: "In Development",
+                statusColor: "#ffbd2e",
+                github: "https://github.com/mohibahmad/TravelNest",
+                screenshots: [
+                    { src: "images/tokyo_ryokan-optimized.jpg", label: "Home Screen" }
+                ],
+                meta: {
+                    "Platform": "iOS & Android",
+                    "Role": "Full Stack Developer",
+                    "Timeline": "4 Weeks",
+                    "Status": "In Development"
+                },
+                description: `TravelNest is a <strong>full-featured travel booking platform</strong> built with Flutter, designed to provide a seamless experience for discovering destinations, exploring hotels, and managing trips. The app integrates <strong>Google Maps</strong> for location services and <strong>Stripe</strong> for secure payment processing.`,
+                features: [
+                    {
+                        title: "Search & Discovery",
+                        icon: "🔍",
+                        items: [
+                            "Real-time destination search with auto-suggestions",
+                            "Filter by price, rating, and amenities",
+                            "Interactive Google Maps integration",
+                            "Popular destinations carousel"
+                        ]
+                    },
+                    {
+                        title: "Booking System",
+                        icon: "📋",
+                        items: [
+                            "Multi-step booking flow with validation",
+                            "Date picker with availability check",
+                            "Room selection and guest management",
+                            "Secure Stripe payment integration"
+                        ]
+                    },
+                    {
+                        title: "User Experience",
+                        icon: "✨",
+                        items: [
+                            "Smooth page transitions and animations",
+                            "Pull-to-refresh on all lists",
+                            "Offline caching for saved trips",
+                            "Dark mode support"
+                        ]
+                    },
+                    {
+                        title: "Architecture",
+                        icon: "🏗️",
+                        items: [
+                            "Clean Architecture with MVVM pattern",
+                            "Riverpod for state management",
+                            "GoRouter for navigation",
+                            "Unit & widget tests for core logic"
+                        ]
+                    }
+                ],
+                stack: [
+                    { name: "Flutter", color: "#02569B" },
+                    { name: "Dart", color: "#00B4AB" },
+                    { name: "Firebase", color: "#FFCA28" },
+                    { name: "Google Maps", color: "#4285F4" },
+                    { name: "Stripe", color: "#635BFF" },
+                    { name: "Riverpod", color: "#00b4ab" },
+                    { name: "GoRouter", color: "#00b4ab" },
+                    { name: "Dio", color: "#61DAFB" }
+                ],
+                highlights: ["Authentication", "Real-time Search", "Payment Integration", "Maps", "Clean Architecture", "Offline Support"],
+                next: "novalearn",
+                prev: null
+            },
+            novalearn: {
+                title: "Nova Learn",
+                subtitle: "AI-powered learning platform for personalized education.",
+                kicker: "AI Education Platform",
+                year: "2026",
+                status: "In Development",
+                statusColor: "#ffbd2e",
+                github: "https://github.com/mohibahmad/NovaLearn",
+                screenshots: [
+                    { src: "images/science_ai-optimized.jpg", label: "AI Chat Interface" }
+                ],
+                meta: {
+                    "Platform": "iOS & Android",
+                    "Role": "Full Stack Developer",
+                    "Timeline": "3 Weeks",
+                    "Status": "In Development"
+                },
+                description: `Nova Learn is an <strong>AI-powered education platform</strong> that delivers personalized learning experiences. Integrating <strong>Google Gemini API</strong> for intelligent content recommendations and interactive AI chat assistance, the app adapts to each learner's pace and style.`,
+                features: [
+                    {
+                        title: "AI-Powered Learning",
+                        icon: "🧠",
+                        items: [
+                            "Gemini API integration for smart tutoring",
+                            "Personalized content recommendations",
+                            "Interactive AI chat for doubt resolution",
+                            "Adaptive difficulty based on performance"
+                        ]
+                    },
+                    {
+                        title: "Course Management",
+                        icon: "📚",
+                        items: [
+                            "Progress tracking with visual analytics",
+                            "Chapter-wise completion markers",
+                            "Bookmark and notes functionality",
+                            "Offline course access"
+                        ]
+                    },
+                    {
+                        title: "User Experience",
+                        icon: "✨",
+                        items: [
+                            "Clean, distraction-free reading mode",
+                            "Smooth animations and transitions",
+                            "Push notifications for reminders",
+                            "Cross-device sync"
+                        ]
+                    },
+                    {
+                        title: "Architecture",
+                        icon: "🏗️",
+                        items: [
+                            "Clean Architecture with BLoC pattern",
+                            "Firebase Auth + Firestore backend",
+                            "Hive for local storage",
+                            "Comprehensive unit tests"
+                        ]
+                    }
+                ],
+                stack: [
+                    { name: "Flutter", color: "#02569B" },
+                    { name: "Dart", color: "#00B4AB" },
+                    { name: "Firebase", color: "#FFCA28" },
+                    { name: "Gemini API", color: "#4285F4" },
+                    { name: "BLoC", color: "#9b5de5" },
+                    { name: "Hive", color: "#4ea8de" },
+                    { name: "Dio", color: "#61DAFB" }
+                ],
+                highlights: ["AI Integration", "Personalized Learning", "Offline Support", "Progress Analytics", "Clean Architecture"],
+                next: "wealthflow",
+                prev: "travelnest"
+            },
+            wealthflow: {
+                title: "WealthFlow",
+                subtitle: "Personal finance management with smart analytics.",
+                kicker: "Finance Management App",
+                year: "2026",
+                status: "In Development",
+                statusColor: "#ffbd2e",
+                github: "https://github.com/mohibahmad/WealthFlow",
+                screenshots: [
+                    { src: "images/portfolio_tracking-optimized.jpg", label: "Dashboard" }
+                ],
+                meta: {
+                    "Platform": "iOS & Android",
+                    "Role": "Full Stack Developer",
+                    "Timeline": "3 Weeks",
+                    "Status": "In Development"
+                },
+                description: `WealthFlow is a <strong>personal finance application</strong> designed to help users take control of their money. With <strong>interactive charts</strong>, budget planners, and spending insights, it provides a complete picture of financial health.`,
+                features: [
+                    {
+                        title: "Expense Tracking",
+                        icon: "💰",
+                        items: [
+                            "Quick expense entry with categories",
+                            "Recurring expense support",
+                            "Receipt photo capture",
+                            "Currency conversion"
+                        ]
+                    },
+                    {
+                        title: "Budget Planning",
+                        icon: "📊",
+                        items: [
+                            "Monthly/weekly budget limits",
+                            "Category-wise budget allocation",
+                            "Overspending alerts",
+                            "Savings goals tracking"
+                        ]
+                    },
+                    {
+                        title: "Analytics Dashboard",
+                        icon: "📈",
+                        items: [
+                            "Interactive charts (fl_chart)",
+                            "Spending trends over time",
+                            "Category breakdown pie charts",
+                            "Export to CSV/PDF"
+                        ]
+                    },
+                    {
+                        title: "Architecture",
+                        icon: "🏗️",
+                        items: [
+                            "Riverpod state management",
+                            "Clean Architecture pattern",
+                            "Firebase Auth + Firestore",
+                            "Local Hive caching"
+                        ]
+                    }
+                ],
+                stack: [
+                    { name: "Flutter", color: "#02569B" },
+                    { name: "Dart", color: "#00B4AB" },
+                    { name: "Firebase", color: "#FFCA28" },
+                    { name: "fl_chart", color: "#22d39a" },
+                    { name: "Hive", color: "#4ea8de" },
+                    { name: "Riverpod", color: "#00b4ab" },
+                    { name: "Dio", color: "#61DAFB" }
+                ],
+                highlights: ["Expense Tracking", "Budget Planning", "Interactive Charts", "Analytics", "Offline Storage"],
+                next: "hrms",
+                prev: "novalearn"
+            },
+            hrms: {
+                title: "HRMS Pro",
+                subtitle: "Complete HR management solution for modern teams.",
+                kicker: "Human Resource Management",
+                year: "2026",
+                status: "In Development",
+                statusColor: "#ffbd2e",
+                github: "https://github.com/mohibahmad/HRMSPro",
+                screenshots: [
+                    { src: "images/ui_engine-optimized.jpg", label: "Employee Dashboard" }
+                ],
+                meta: {
+                    "Platform": "iOS & Android",
+                    "Role": "Full Stack Developer",
+                    "Timeline": "5 Weeks",
+                    "Status": "In Development"
+                },
+                description: `HRMS Pro is a <strong>comprehensive human resource management system</strong> built for organizations to streamline employee management, attendance tracking, leave requests, and payroll processing across mobile platforms.`,
+                features: [
+                    {
+                        title: "Employee Management",
+                        icon: "👥",
+                        items: [
+                            "Employee directory with search",
+                            "Profile management",
+                            "Department-wise organization",
+                            "Role-based access control (RBAC)"
+                        ]
+                    },
+                    {
+                        title: "Attendance & Leave",
+                        icon: "📅",
+                        items: [
+                            "Clock in/out with GPS",
+                            "Leave request and approval flow",
+                            "Leave balance tracking",
+                            "Holiday calendar"
+                        ]
+                    },
+                    {
+                        title: "Payroll",
+                        icon: "💵",
+                        items: [
+                            "Salary slip generation",
+                            "Tax calculations",
+                            "Deductions and allowances",
+                            "Payment history"
+                        ]
+                    },
+                    {
+                        title: "Architecture",
+                        icon: "🏗️",
+                        items: [
+                            "REST API integration with Dio",
+                            "Riverpod state management",
+                            "Secure token-based auth",
+                            "Offline data sync"
+                        ]
+                    }
+                ],
+                stack: [
+                    { name: "Flutter", color: "#02569B" },
+                    { name: "Dart", color: "#00B4AB" },
+                    { name: "Firebase", color: "#FFCA28" },
+                    { name: "REST APIs", color: "#61DAFB" },
+                    { name: "Riverpod", color: "#00b4ab" },
+                    { name: "Dio", color: "#61DAFB" },
+                    { name: "Hive", color: "#4ea8de" }
+                ],
+                highlights: ["RBAC", "GPS Attendance", "Payroll", "Leave Management", "Offline Sync"],
+                next: "expenseflow",
+                prev: "wealthflow"
+            },
+            expenseflow: {
+                title: "ExpenseFlow",
+                subtitle: "Modern finance app with offline-first approach.",
+                kicker: "Personal Finance Manager",
+                year: "2026",
+                status: "In Development",
+                statusColor: "#ffbd2e",
+                github: "https://github.com/mohibahmad/ExpenseFlow",
+                screenshots: [
+                    { src: "images/pbr_customizer-optimized.jpg", label: "Expense Dashboard" }
+                ],
+                meta: {
+                    "Platform": "iOS & Android",
+                    "Role": "Full Stack Developer",
+                    "Timeline": "2 Weeks",
+                    "Status": "In Development"
+                },
+                description: `ExpenseFlow is a <strong>modern personal finance manager</strong> focused on simplicity and offline-first experience. Built with <strong>Hive</strong> for local storage, it ensures users can track expenses even without internet.`,
+                features: [
+                    {
+                        title: "Expense Management",
+                        icon: "💳",
+                        items: [
+                            "Quick expense entry with categories",
+                            "Recurring expenses",
+                            "Split expenses with friends",
+                            "Photo receipts"
+                        ]
+                    },
+                    {
+                        title: "Budget Tools",
+                        icon: "🎯",
+                        items: [
+                            "Set monthly budgets",
+                            "Category-wise limits",
+                            "Spending alerts",
+                            "Savings goals"
+                        ]
+                    },
+                    {
+                        title: "Offline-First",
+                        icon: "📴",
+                        items: [
+                            "Full Hive local storage",
+                            "No internet required",
+                            "Auto-sync when online",
+                            "Data backup & restore"
+                        ]
+                    },
+                    {
+                        title: "Analytics",
+                        icon: "📊",
+                        items: [
+                            "Daily/weekly/monthly views",
+                            "Category breakdown",
+                            "Spending trends",
+                            "Export capabilities"
+                        ]
+                    }
+                ],
+                stack: [
+                    { name: "Flutter", color: "#02569B" },
+                    { name: "Dart", color: "#00B4AB" },
+                    { name: "Firebase", color: "#FFCA28" },
+                    { name: "Hive", color: "#4ea8de" },
+                    { name: "fl_chart", color: "#22d39a" },
+                    { name: "Riverpod", color: "#00b4ab" }
+                ],
+                highlights: ["Offline-First", "Hive Storage", "Budget Planning", "Analytics", "Fast Performance"],
+                next: "tradepulse",
+                prev: "hrms"
+            },
+            tradepulse: {
+                title: "TradePulse",
+                subtitle: "Cross-platform investment tracker including macOS.",
+                kicker: "Trading & Investment Tracker",
+                year: "2026",
+                status: "In Development",
+                statusColor: "#ffbd2e",
+                github: "https://github.com/mohibahmad/TradePulse",
+                screenshots: [
+                    { src: "images/tradepulse-optimized.jpg", label: "Portfolio Dashboard" }
+                ],
+                meta: {
+                    "Platform": "iOS, Android & macOS",
+                    "Role": "Full Stack Developer",
+                    "Timeline": "4 Weeks",
+                    "Status": "In Development"
+                },
+                description: `TradePulse is a <strong>cross-platform investment tracker</strong> for iOS, Android, and <strong>macOS</strong>. Monitor stocks and crypto portfolios with watchlists, real-time market data, and performance analytics — all from a single app.`,
+                features: [
+                    {
+                        title: "Portfolio Tracking",
+                        icon: "📈",
+                        items: [
+                            "Real-time portfolio value",
+                            "Profit/loss tracking",
+                            "Asset allocation breakdown",
+                            "Historical performance charts"
+                        ]
+                    },
+                    {
+                        title: "Watchlists",
+                        icon: "👀",
+                        items: [
+                            "Custom watchlists",
+                            "Price alerts",
+                            "News feed integration",
+                            "Compare stocks"
+                        ]
+                    },
+                    {
+                        title: "Market Data",
+                        icon: "🌐",
+                        items: [
+                            "Real-time stock prices",
+                            "Crypto market data",
+                            "Market news feed",
+                            "Economic calendar"
+                        ]
+                    },
+                    {
+                        title: "macOS Native",
+                        icon: "🍎",
+                        items: [
+                            "Native macOS menu bar",
+                            "Keyboard shortcuts",
+                            "Window management",
+                            "Touch Bar support"
+                        ]
+                    }
+                ],
+                stack: [
+                    { name: "Flutter", color: "#02569B" },
+                    { name: "Dart", color: "#00B4AB" },
+                    { name: "Firebase", color: "#FFCA28" },
+                    { name: "REST APIs", color: "#61DAFB" },
+                    { name: "fl_chart", color: "#22d39a" },
+                    { name: "macOS", color: "#A2AAAD" },
+                    { name: "Riverpod", color: "#00b4ab" }
+                ],
+                highlights: ["macOS Support", "Real-time Data", "Watchlists", "Portfolio Analytics", "Cross-Platform"],
+                next: null,
+                prev: "expenseflow"
+            }
+        };
+
+        // Get project from URL
+        const params = new URLSearchParams(window.location.search);
+        const projectKey = params.get('id');
+        const project = projects[projectKey];
+
+        if (!project) {
+            document.title = 'Project not found — Mohib Ahmad';
+            document.getElementById('projectRobots').content = 'noindex, follow';
+            document.getElementById('projHero').innerHTML = `
+        <div style="padding:80px 0;text-align:center;">
+          <h1 style="font-size:24px;margin-bottom:12px;">Project not found</h1>
+          <p style="color:var(--muted);margin-bottom:24px;">The project you're looking for doesn't exist.</p>
+          <a href="index.html?from=project" class="topbar-btn primary" style="display:inline-flex;">View All Projects</a>
+        </div>
+      `;
+        } else {
+            document.title = `${project.title} — Flutter Project · Mohib Ahmad`;
+
+            const canonicalUrl = `https://mohibahmad.studio/project.html?id=${encodeURIComponent(projectKey)}`;
+            const plainOverview = project.description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            const seoDescription = `${project.title}: ${project.subtitle} ${plainOverview}`.slice(0, 158).trim();
+            const socialImage = new URL(project.screenshots[0].src, 'https://mohibahmad.studio/').href;
+            document.getElementById('projectCanonical').href = canonicalUrl;
+            document.getElementById('projectDescription').content = seoDescription;
+            document.getElementById('projectOgTitle').content = `${project.title} — Flutter Project`;
+            document.getElementById('projectOgDescription').content = seoDescription;
+            document.getElementById('projectOgUrl').content = canonicalUrl;
+            document.getElementById('projectOgImage').content = socialImage;
+            document.getElementById('projectOgImageAlt').content = `${project.title} Flutter project preview`;
+            document.getElementById('projectTwitterTitle').content = `${project.title} — Flutter Project`;
+            document.getElementById('projectTwitterDescription').content = seoDescription;
+            document.getElementById('projectTwitterImage').content = socialImage;
+            document.getElementById('projectSchema').textContent = JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'CreativeWork',
+                name: project.title,
+                headline: `${project.title} — ${project.kicker}`,
+                description: seoDescription,
+                url: canonicalUrl,
+                image: socialImage,
+                creator: { '@type': 'Person', name: 'Mohib Ahmad', url: 'https://mohibahmad.studio/' },
+                keywords: project.stack.map(item => item.name).join(', '),
+                inLanguage: 'en'
+            });
+
+            const createHeroHTML = (p) => `
+                <div class="proj-hero-top">
+                    <div class="proj-kicker">${p.kicker}</div>
+                    <h1 class="proj-title">${p.title}</h1>
+                    <p class="proj-subtitle">${p.subtitle}</p>
+                </div>`;
+
+            const createScreenshotsHTML = (p) => {
+                const slides = p.screenshots.map((ss, i) => `
+                    <div class="ss-item">
+                        <img src="${ss.src}" alt="${p.title} — ${ss.label}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async" ${i === 0 ? 'fetchpriority="high"' : ''} width="900" height="900">
+                        <div class="ss-label">${ss.label}</div>
+                    </div>`).join('');
+                const dots = p.screenshots.length > 1
+                    ? `<div class="ss-dots">${p.screenshots.map((_, i) => `<button class="ss-dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Show screenshot ${i + 1}"></button>`).join('')}</div>`
+                    : '';
+                return `<div class="ss-track">${slides}</div>${dots}`;
+            };
+
+            const createMetaHTML = (p) => Object.entries(p.meta)
+                .map(([key, val]) => `<div class="proj-meta-item"><span>${key}</span><b>${val}</b></div>`)
+                .join('');
+
+            const createFeaturesHTML = (p) => p.features.map(feat => `
+                <div class="feature-card">
+                    <h4><span class="feat-icon">${feat.icon}</span> ${feat.title}</h4>
+                    <ul>${feat.items.map(item => `<li>${item}</li>`).join('')}</ul>
+                </div>`).join('');
+
+            const createStackHTML = (p) => `
+                <div class="stack-title">Tech Stack</div>
+                <div class="stack-chips">
+                    ${p.stack.map(s => `
+                        <div class="stack-chip">
+                            <span class="chip-dot" style="background:${s.color}"></span>
+                            ${s.name}
+                        </div>`).join('')}
+                </div>
+                <div class="highlights">
+                    ${p.highlights.map(h => `<span class="highlight-tag">${h}</span>`).join('')}
+                </div>`;
+
+            const createGithubButtonHTML = (p) => p.github ? `
+                <div class="github-row">
+                    <a href="${p.github}" target="_blank" rel="noopener noreferrer" class="github-btn">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                        </svg>
+                        <span>View Source Code</span>
+                    </a>
+                </div>` : '';
+
+            const createNavHTML = (p) => {
+                let prevLink = '<div></div>';
+                if (p.prev && projects[p.prev]) {
+                    prevLink = `<a href="project.html?id=${p.prev}" class="proj-nav-link"><span class="proj-nav-label">← Previous</span><span class="proj-nav-name">${projects[p.prev].title}</span></a>`;
+                }
+                let nextLink = '<div></div>';
+                if (p.next && projects[p.next]) {
+                    nextLink = `<a href="project.html?id=${p.next}" class="proj-nav-link next"><span class="proj-nav-label">Next →</span><span class="proj-nav-name">${projects[p.next].title}</span></a>`;
+                }
+                return prevLink + nextLink;
+            };
+
+            const renderProject = (p) => {
+                document.getElementById('projHero').innerHTML = createHeroHTML(p);
+                document.getElementById('screenshots').innerHTML = createScreenshotsHTML(p);
+                document.getElementById('projMeta').innerHTML = createMetaHTML(p);
+
+                document.getElementById('projContent').innerHTML = `
+                    <div class="proj-section">
+                        <h2 class="proj-section-title">Overview</h2>
+                        <p class="proj-desc">${p.description}</p>
+                    </div>
+                    <div class="proj-section">
+                        <h2 class="proj-section-title">Key Features</h2>
+                        <div class="features-grid">${createFeaturesHTML(p)}</div>
+                    </div>
+                    <div class="stack-section">${createStackHTML(p)}</div>
+                    ${createGithubButtonHTML(p)}
+                `;
+
+                document.getElementById('projNav').innerHTML = createNavHTML(p);
+            };
+
+            renderProject(project);
+
+            // Screenshot scroll dots
+            const track = document.querySelector('.ss-track');
+            const dots = document.querySelectorAll('.ss-dot');
+            if (track && dots.length) {
+                track.addEventListener('scroll', () => {
+                    const scrollLeft = track.scrollLeft;
+                    const itemWidth = track.querySelector('.ss-item').offsetWidth + 16;
+                    const active = Math.round(scrollLeft / itemWidth);
+                    dots.forEach((d, i) => d.classList.toggle('active', i === active));
+                });
+                dots.forEach(d => {
+                    d.addEventListener('click', () => {
+                        const itemWidth = track.querySelector('.ss-item').offsetWidth + 16;
+                        track.scrollTo({ left: d.dataset.index * itemWidth, behavior: 'smooth' });
+                    });
+                });
+            }
+        }
+
+        // Loading overlay on "All Projects" click
+        (function () {
+            var overlay = document.getElementById('loadOverlay');
+            var backBtn = document.getElementById('backBtn');
+            if (!overlay || !backBtn) return;
+            backBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                overlay.classList.add('active');
+                setTimeout(function () {
+                    window.location.href = 'index.html?from=project';
+                }, 600);
+            });
+        })();
+
+        if (window.AntigravityTransition) {
+            window.AntigravityTransition.mountBackground({ count: 230 });
+        }
+    </script>
+</body>
+
+</html>
