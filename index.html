@@ -3008,7 +3008,7 @@
 
     /* Page transition for resume modal */
     .page {
-      transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1), filter 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+      transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1), filter 0.6s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.42s ease;
       will-change: transform, filter;
       transform-style: preserve-3d;
     }
@@ -5017,20 +5017,20 @@
         done = true;
         pl.style.opacity = '0';
         pl.style.pointerEvents = 'none';
-        pl.style.transition = 'opacity 0.45s ease';
-        document.body.classList.remove('loading');
-        // Flag the page as ready so scroll-triggered animations (cards, etc.)
-        // can start revealing with a proper animation instead of an instant pop.
-        window.__pageReady = true;
-        document.dispatchEvent(new Event('page:ready'));
+        pl.style.transition = 'opacity 0.58s ease';
         setTimeout(function () {
+          /* Keep the portfolio hidden for the entire loader fade. Revealing it
+             earlier made page content flash through the transparent loader. */
           pl.style.display = 'none';
+          document.body.classList.remove('loading');
+          window.__pageReady = true;
+          document.dispatchEvent(new Event('page:ready'));
           if (window.__cleanupLoader3D) {
             window.__cleanupLoader3D();
             window.__cleanupLoader3D = null;
           }
           initSmoothScroll();
-        }, 480);
+        }, 610);
       }
 
       function initSmoothScroll(hashTarget) {
@@ -5201,15 +5201,28 @@
           scene.add(points);
 
           var pmx = 0, pmy = 0, ptx = 0, pty = 0;
+          var starX = 0, starY = 0;
           function track(e) {
-            ptx = (e.clientX / window.innerWidth - 0.5) * 1.6;
-            pty = (e.clientY / window.innerHeight - 0.5) * -1.6;
+            var nx = (e.clientX / window.innerWidth - 0.5) * 2;
+            var ny = (e.clientY / window.innerHeight - 0.5) * 2;
+            ptx = nx * 0.8;
+            pty = ny * -0.8;
+            starX = nx;
+            starY = -ny;
           }
-          window.addEventListener('mousemove', track, { passive: true });
+          function resetPointer() {
+            ptx = 0;
+            pty = 0;
+            starX = 0;
+            starY = 0;
+          }
+          window.addEventListener('pointermove', track, { passive: true });
+          window.addEventListener('pointerleave', resetPointer, { passive: true });
+          canvas.dataset.interactiveStars = 'true';
 
           var activeFrame = true;
           var firstLoaderFrame = true;
-          function anim() {
+          function anim(time) {
             if (!activeFrame) return;
             requestAnimationFrame(anim);
             mesh.rotation.y += 0.005;
@@ -5218,6 +5231,19 @@
             pmy += (pty - pmy) * 0.05;
             mesh.position.x = pmx;
             mesh.position.y = pmy;
+
+            /* Star field follows the pointer at a different depth than the
+               wireframe, creating a lightweight interactive parallax. */
+            points.position.x += ((starX * -0.28) - points.position.x) * 0.035;
+            points.position.y += ((starY * -0.22) - points.position.y) * 0.035;
+            points.rotation.y += 0.0007 + starX * 0.0014;
+            points.rotation.x += 0.00035 + starY * 0.001;
+            var interaction = Math.min(1, Math.abs(starX) + Math.abs(starY));
+            var pulse = Math.sin((time || 0) * 0.0022) * 0.06;
+            pMat.opacity = 0.76 + pulse + interaction * 0.08;
+            var starScale = 1 + interaction * 0.018;
+            points.scale.set(starScale, starScale, starScale);
+
             renderer.render(scene, camera);
             if (firstLoaderFrame) {
               firstLoaderFrame = false;
@@ -5226,16 +5252,19 @@
           }
           requestAnimationFrame(anim);
 
-          window.addEventListener('resize', function () {
+          function resizeLoaderScene() {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-          }, { passive: true });
+          }
+          window.addEventListener('resize', resizeLoaderScene, { passive: true });
 
           window.__cleanupLoader3D = function () {
             activeFrame = false;
-            window.removeEventListener('mousemove', track);
-            geom.dispose(); mat.dispose(); pGeom.dispose(); pMat.dispose(); renderer.dispose();
+            window.removeEventListener('pointermove', track);
+            window.removeEventListener('pointerleave', resetPointer);
+            window.removeEventListener('resize', resizeLoaderScene);
+            geom.dispose(); mat.dispose(); pGeom.dispose(); pMat.dispose(); pTexture.dispose(); renderer.dispose();
           };
         } catch (e) {
           canvas.style.display = 'none';
