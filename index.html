@@ -4293,26 +4293,27 @@
           <div class="stack">
 
             <!-- 01 -->
-            <a href="project.html?id=travelnest" class="pro view-target"
+            <a href="project.html?id=expensemanager" class="pro view-target"
               style="text-decoration:none;color:inherit;display:block;">
               <div class="pc-bar">
                 <div class="pc-dots"><i style="background:#ff5f57"></i><i style="background:#ffbd2e"></i><i
                     style="background:#28ca42"></i></div>
-                <div class="pc-file">travelnest.dart <span>— Travel Booking Platform</span></div>
-                <div class="pc-right"><span>2026</span><span class="live-pill"
-                    style="background:rgba(255,189,46,.095); border:1px solid rgba(255,189,46,.30); color:#ffe699;"><span
-                      class="live-dot" style="background:#ffbd2e; box-shadow:0 0 8px rgba(255,189,46,.55)"></span>
-                    DEV</span></div>
+                <div class="pc-file">expense_manager.dart <span>— Expense Manager App</span></div>
+                <div class="pc-right"><span>2026</span><span class="live-pill"><span
+                      class="live-dot"></span>
+                    Live</span></div>
               </div>
               <div class="pc-visual">
-                <div class="pc-visual-inner">
-                  <div class="pc-img"
-                    style="background: url('images/tokyo_ryokan-optimized.jpg') no-repeat center center; background-size: cover;">
-                  </div>
+                <div class="pc-visual-inner" style="display:flex; gap:14px; padding:20px; align-items:center; justify-content:center; height:100%; overflow:hidden;">
+                  <img src="project.jpg" alt="Expense Manager — Dashboard" style="height:88%; max-height:360px; border-radius:14px; object-fit:cover; flex-shrink:0; box-shadow: 0 8px 32px rgba(0,0,0,.45);" loading="lazy" />
+                  <img src="project1.jpg" alt="Expense Manager — Transactions" style="height:88%; max-height:360px; border-radius:14px; object-fit:cover; flex-shrink:0; box-shadow: 0 8px 32px rgba(0,0,0,.45);" loading="lazy" />
+                  <img src="project2.jpg" alt="Expense Manager — Budget" style="height:88%; max-height:360px; border-radius:14px; object-fit:cover; flex-shrink:0; box-shadow: 0 8px 32px rgba(0,0,0,.45);" loading="lazy" />
+                  <img src="project3.jpg" alt="Expense Manager — Analytics" style="height:88%; max-height:360px; border-radius:14px; object-fit:cover; flex-shrink:0; box-shadow: 0 8px 32px rgba(0,0,0,.45);" loading="lazy" />
+                  <img src="project4.jpg" alt="Expense Manager — Billing" style="height:88%; max-height:360px; border-radius:14px; object-fit:cover; flex-shrink:0; box-shadow: 0 8px 32px rgba(0,0,0,.45);" loading="lazy" />
                 </div>
                 <div class="pc-big-n" aria-hidden="true">01</div>
-                <div class="pc-shot-title">TravelNest</div>
-                <div class="pc-year-tag">Travel Booking Platform</div>
+                <div class="pc-shot-title">Expense Manager</div>
+                <div class="pc-year-tag">Cash Budget & Expense Tracking</div>
                 <div
                   style="position:absolute;inset:0;opacity:.16;background-image:repeating-linear-gradient(0deg, transparent, transparent 43px, rgba(255,255,255,.032) 43px, rgba(255,255,255,.032) 44px),repeating-linear-gradient(90deg, transparent, transparent 43px, rgba(255,255,255,.026) 43px, rgba(255,255,255,.026) 44px)">
                 </div>
@@ -4321,17 +4322,16 @@
                 </div>
               </div>
               <div class="pc-body">
-                <div class="pc-eyebrow">TravelNest — Travel Booking Platform</div>
-                <h3>A booking flow designed around clear state and recoverable steps.</h3>
-                <p>An in-development Flutter case study covering destination discovery, maps, booking state, and
-                  payment integration. The project page explains the architecture and current validation scope.</p>
+                <div class="pc-eyebrow">Expense Manager — Cash Budget & Expense Tracker</div>
+                <h3>Cash Budget & Expense Tracking App</h3>
+                <p>A personal finance app that helps users track daily expenses, manage budgets, and gain insights into their spending habits with a clean, intuitive interface.</p>
                 <div class="pc-meta">
-                  <div><span>Stack</span><b>Flutter · Firebase · Google Maps · Stripe</b></div>
-                  <div><span>Highlights</span><b>Auth · Search · Booking · Maps · Clean Arch</b></div>
+                  <div><span>Stack</span><b>Flutter · Firebase · Local Storage</b></div>
+                  <div><span>Highlights</span><b>Expense Tracking · Budget Planning · Analytics</b></div>
                 </div>
                 <div class="pc-footer">
-                  <div class="pc-tags"><span class="tag">Flutter</span><span class="tag">Firebase</span><span
-                      class="tag">Google Maps</span><span class="tag">Stripe</span></div>
+                  <div class="pc-tags"><span class="tag">Flutter</span><span class="tag">iOS</span><span
+                      class="tag">Finance</span><span class="tag">Analytics</span></div>
                   <span class="pc-link">View project <em>→</em></span>
                 </div>
               </div>
@@ -5480,7 +5480,7 @@
         stars.push({
           x: Math.random(),
           y: Math.random(),
-          size: 0.7 + Math.random() * 1.1,
+          size: 1.0 + Math.random() * 1.5,
           speed: 0.015 + Math.random() * 0.035,
           phase: Math.random() * Math.PI * 2,
           depth: 0.25 + Math.random() * 0.75,
@@ -5504,7 +5504,7 @@
         stars.forEach(function (s) {
           var sx = s.x * W - mx * s.depth * d;
           var sy = s.y * H - my * s.depth * d;
-          var op = 0.06 + Math.sin(t * s.speed * 10 + s.phase) * 0.14;
+          var op = 0.18 + Math.sin(t * s.speed * 10 + s.phase) * 0.28;
           var colors = [
             [0, 242, 254],
             [58, 134, 255],
@@ -5513,8 +5513,8 @@
           ];
           var c = colors[s.ci % colors.length];
           x.fillStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + op.toFixed(3) + ')';
-          x.shadowBlur = s.size * 3 * d;
-          x.shadowColor = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.5)';
+          x.shadowBlur = s.size * 5 * d;
+          x.shadowColor = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.7)';
           x.beginPath();
           x.arc(sx, sy, s.size * d, 0, Math.PI * 2);
           x.fill();

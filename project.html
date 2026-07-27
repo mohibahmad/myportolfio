@@ -38,10 +38,10 @@
         }
 
         :root {
-            --bg: #0b0d13;
-            --bg2: #10141c;
-            --surface: #161a23;
-            --surface2: #1b202b;
+            --bg: #0d1017;
+            --bg2: #111620;
+            --surface: rgba(22, 26, 35, 0.85);
+            --surface2: rgba(27, 32, 43, 0.9);
             --line: #252b36;
             --text: #e9ebf1;
             --muted: #9aa1ae;
@@ -82,15 +82,31 @@
             min-height: 100vh;
         }
 
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                radial-gradient(800px 600px at 70% 10%, rgba(58, 134, 255, 0.06) 0%, transparent 60%),
+                radial-gradient(600px 400px at 20% 80%, rgba(34, 211, 154, 0.04) 0%, transparent 60%);
+        }
+
+        main.wrap {
+            position: relative;
+            z-index: 2;
+        }
+
         /* TOPBAR */
         .topbar {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(11, 13, 19, 0.92);
+            background: rgba(11, 13, 19, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--line);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             padding: 14px 40px;
             display: flex;
             align-items: center;
@@ -258,7 +274,7 @@
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.07);
-            background: var(--surface);
+            background: rgba(22, 26, 35, 0.7);
             position: relative;
         }
 
@@ -393,7 +409,8 @@
             padding: 22px;
             border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.07);
-            background: var(--surface);
+            background: rgba(22, 26, 35, 0.7);
+            backdrop-filter: blur(10px);
         }
 
         .case-card h3 {
@@ -426,7 +443,8 @@
         }
 
         .feature-card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 100%), var(--surface);
+            background: rgba(22, 26, 35, 0.65);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 16px;
             padding: 24px;
@@ -661,6 +679,110 @@
             padding: 48px 0 40px;
         }
 
+        /* LIGHTBOX */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(6, 8, 12, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(.22, 1, .36, 1);
+            object-fit: contain;
+        }
+
+        .lightbox.active .lightbox-img {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+
+        .ss-item {
+            cursor: zoom-in;
+        }
+
         /* LOADING OVERLAY */
         #loadOverlay {
             position: fixed;
@@ -729,12 +851,22 @@
 </head>
 
 <body>
+    <canvas id="bg-aurora" aria-hidden="true" style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.97;"></canvas>
     <a class="skip-link" href="#projectContent">Skip to project content</a>
 
     <!-- LOADING OVERLAY -->
     <div id="loadOverlay">
         <div class="lo-spinner"></div>
         <div class="lo-text">Loading Projects…</div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">&#8249;</button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">&#8250;</button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="Screenshot preview">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
 
     <!-- TOPBAR -->
@@ -799,6 +931,81 @@
     <script>
         // Project Data
         const projects = {
+            expensemanager: {
+                title: "Expense Manager",
+                subtitle: "Cash budget & expense tracking app for personal finance.",
+                kicker: "Expense Manager App",
+                year: "2026",
+                status: "Live",
+                statusColor: "#22d39a",
+                appStore: "https://apps.apple.com/app/expense-manager-cash-budget/id6776123649",
+                screenshots: [
+                    { src: "project.jpg", label: "Dashboard" },
+                    { src: "project1.jpg", label: "Transactions" },
+                    { src: "project2.jpg", label: "Budget" },
+                    { src: "project3.jpg", label: "Analytics" },
+                    { src: "project4.jpg", label: "Billing" }
+                ],
+                meta: {
+                    "Platform": "iOS & Android",
+                    "Role": "Full Stack Developer",
+                    "Timeline": "2 Weeks",
+                    "Status": "Live on App Store"
+                },
+                description: `Expense Manager is a <strong>personal finance app</strong> that helps users track daily expenses, manage budgets, and gain insights into their spending habits. Built with <strong>Flutter</strong> and <strong>Firebase</strong>, it provides a clean, intuitive interface for managing money on the go.`,
+                features: [
+                    {
+                        title: "Expense Tracking",
+                        icon: "💰",
+                        items: [
+                            "Quick expense entry with categories",
+                            "Recurring expense support",
+                            "Daily, weekly & monthly views",
+                            "Search and filter transactions"
+                        ]
+                    },
+                    {
+                        title: "Budget Planning",
+                        icon: "📊",
+                        items: [
+                            "Monthly budget limits by category",
+                            "Overspending alerts",
+                            "Savings goals tracking",
+                            "Category-wise spending breakdown"
+                        ]
+                    },
+                    {
+                        title: "Analytics",
+                        icon: "📈",
+                        items: [
+                            "Interactive charts and graphs",
+                            "Spending trends over time",
+                            "Category-wise distribution",
+                            "Monthly comparison reports"
+                        ]
+                    },
+                    {
+                        title: "User Experience",
+                        icon: "✨",
+                        items: [
+                            "Clean, intuitive interface",
+                            "Offline storage support",
+                            "Dark mode support",
+                            "Fast and responsive design"
+                        ]
+                    }
+                ],
+                stack: [
+                    { name: "Flutter", color: "#02569B" },
+                    { name: "Dart", color: "#00B4AB" },
+                    { name: "Firebase", color: "#FFCA28" },
+                    { name: "Hive", color: "#4ea8de" },
+                    { name: "Charts", color: "#22d39a" }
+                ],
+                highlights: ["Expense Tracking", "Budget Planning", "Analytics", "Offline Storage", "Live on App Store"],
+                next: "travelnest",
+                prev: null
+            },
             travelnest: {
                 title: "TravelNest",
                 subtitle: "An in-development booking case study built with Flutter.",
@@ -885,7 +1092,7 @@
                 ],
                 highlights: ["Authentication", "Real-time Search", "Payment Integration", "Maps", "Clean Architecture", "Offline Support"],
                 next: "novalearn",
-                prev: null
+                prev: "expensemanager"
             },
             novalearn: {
                 title: "Nova Learn",
@@ -1350,6 +1557,19 @@
                     </a>
                 </div>` : '';
 
+            const createAppStoreButtonHTML = (p) => p.appStore ? `
+                <div class="github-row">
+                    <a href="${p.appStore}" target="_blank" rel="noopener noreferrer" class="github-btn" style="background:rgba(58,134,255,.08); border-color:rgba(58,134,255,.3);">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                            <path d="M2 2l7.586 7.586"/>
+                            <circle cx="11" cy="11" r="2"/>
+                        </svg>
+                        <span>View Project</span>
+                    </a>
+                </div>` : '';
+
             const createNavHTML = (p) => {
                 let prevLink = '<div></div>';
                 if (p.prev && projects[p.prev]) {
@@ -1389,6 +1609,7 @@
                     </div>` : ''}
                     <div class="stack-section">${createStackHTML(p)}</div>
                     ${createGithubButtonHTML(p)}
+                    ${createAppStoreButtonHTML(p)}
                 `;
 
                 document.getElementById('projNav').innerHTML = createNavHTML(p);
@@ -1413,6 +1634,86 @@
                     });
                 });
             }
+
+            // Lightbox for screenshots
+            (function () {
+                const lightbox = document.getElementById('lightbox');
+                const lightboxImg = document.getElementById('lightboxImg');
+                const lightboxCaption = document.getElementById('lightboxCaption');
+                const lightboxClose = document.getElementById('lightboxClose');
+                const lightboxPrev = document.getElementById('lightboxPrev');
+                const lightboxNext = document.getElementById('lightboxNext');
+                if (!lightbox || !lightboxImg) return;
+
+                let currentIndex = 0;
+                let images = [];
+
+                function getImages() {
+                    const items = document.querySelectorAll('.ss-item');
+                    images = [];
+                    items.forEach((item, i) => {
+                        const img = item.querySelector('img');
+                        const label = item.querySelector('.ss-label');
+                        if (img) {
+                            images.push({
+                                src: img.src,
+                                alt: img.alt,
+                                label: label ? label.textContent : ''
+                            });
+                            item.style.cursor = 'zoom-in';
+                            item.addEventListener('click', () => openLightbox(i));
+                        }
+                    });
+                }
+
+                function openLightbox(index) {
+                    currentIndex = index;
+                    updateLightbox();
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeLightbox() {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+
+                function updateLightbox() {
+                    if (images[currentIndex]) {
+                        lightboxImg.src = images[currentIndex].src;
+                        lightboxImg.alt = images[currentIndex].alt;
+                        lightboxCaption.textContent = images[currentIndex].label || '';
+                        lightboxPrev.style.display = images.length > 1 ? 'flex' : 'none';
+                        lightboxNext.style.display = images.length > 1 ? 'flex' : 'none';
+                    }
+                }
+
+                function nextImage() {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    updateLightbox();
+                }
+
+                function prevImage() {
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    updateLightbox();
+                }
+
+                lightboxClose.addEventListener('click', closeLightbox);
+                lightbox.addEventListener('click', (e) => {
+                    if (e.target === lightbox) closeLightbox();
+                });
+                lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); prevImage(); });
+                lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); nextImage(); });
+
+                document.addEventListener('keydown', (e) => {
+                    if (!lightbox.classList.contains('active')) return;
+                    if (e.key === 'Escape') closeLightbox();
+                    if (e.key === 'ArrowRight') nextImage();
+                    if (e.key === 'ArrowLeft') prevImage();
+                });
+
+                getImages();
+            })();
         }
 
         // Loading overlay on "All Projects" click
@@ -1432,6 +1733,77 @@
         if (window.AntigravityTransition) {
             window.AntigravityTransition.mountBackground({ count: 230 });
         }
+
+        /* ===== aurora background with stars ===== */
+        (function () {
+            var c = document.getElementById('bg-aurora');
+            if (!c || !c.getContext) return;
+            var x = c.getContext('2d', { alpha: true });
+            var W, H, d = Math.min(window.devicePixelRatio || 1, 1.2), t = 0;
+            function rs() { W = c.width = innerWidth * d; H = c.height = innerHeight * d; c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px'; }
+            rs(); addEventListener('resize', rs);
+            var blobs = [
+                { hx: .72, hy: .16, r: .40, h: 215, s: .31 },
+                { hx: .20, hy: .60, r: .33, h: 266, s: .21 },
+                { hx: .52, hy: .8, r: .29, h: 198, s: .26 }
+            ];
+            var stars = [];
+            for (var i = 0; i < 38; i++) {
+                stars.push({
+                    x: Math.random(),
+                    y: Math.random(),
+                    size: 1.0 + Math.random() * 1.5,
+                    speed: 0.015 + Math.random() * 0.035,
+                    phase: Math.random() * Math.PI * 2,
+                    depth: 0.25 + Math.random() * 0.75,
+                    ci: Math.floor(Math.random() * 4)
+                });
+            }
+            var mx = 0, my = 0, tx = 0, ty = 0;
+            addEventListener('mousemove', function (e) {
+                tx = (e.clientX / window.innerWidth - 0.5) * 24;
+                ty = (e.clientY / window.innerHeight - 0.5) * 24;
+            }, { passive: true });
+
+            var frameSkip = 0;
+            (function draw() {
+                if (++frameSkip % 2) { requestAnimationFrame(draw); return; }
+                t += 0.0072;
+                mx += (tx - mx) * 0.08;
+                my += (ty - my) * 0.08;
+                x.clearRect(0, 0, W, H);
+                stars.forEach(function (s) {
+                    var sx = s.x * W - mx * s.depth * d;
+                    var sy = s.y * H - my * s.depth * d;
+                    var op = 0.18 + Math.sin(t * s.speed * 10 + s.phase) * 0.28;
+                    var colors = [
+                        [0, 242, 254],
+                        [58, 134, 255],
+                        [34, 211, 154],
+                        [255, 255, 255]
+                    ];
+                    var c = colors[s.ci % colors.length];
+                    x.fillStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + op.toFixed(3) + ')';
+                    x.shadowBlur = s.size * 5 * d;
+                    x.shadowColor = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',0.7)';
+                    x.beginPath();
+                    x.arc(sx, sy, s.size * d, 0, Math.PI * 2);
+                    x.fill();
+                    x.shadowBlur = 0;
+                });
+                blobs.forEach(function (b, i) {
+                    var bx = W * (b.hx + Math.sin(t * b.s + i) * 0.032);
+                    var by = H * (b.hy + Math.cos(t * b.s * 1.22 + i * 1.1) * 0.028);
+                    var rad = Math.min(W, H) * b.r;
+                    var g = x.createRadialGradient(bx, by, 0, bx, by, rad);
+                    g.addColorStop(0, 'hsla(' + b.h + ',72%,60%,0.084)');
+                    g.addColorStop(0.5, 'hsla(' + (b.h + 7) + ',58%,52%,0.034)');
+                    g.addColorStop(1, 'rgba(8,10,14,0)');
+                    x.fillStyle = g; x.beginPath(); x.arc(bx, by, rad, 0, Math.PI * 2); x.fill();
+                });
+                requestAnimationFrame(draw);
+            })();
+        })();
     </script>
 </body>
 
